@@ -50,7 +50,7 @@ class ExtratorURL:
         return self.url == other.url
 
 
-url = "bytebank.com/cambio?moedaDestino=euro&quantidade=100&moedaOrigem=real"
+url = "bytebank.com/cambio?moedaDestino=dolar&quantidade=100&moedaOrigem=real"
 extrator_url = ExtratorURL(url)
 
 base = extrator_url.get_url_base()
@@ -66,7 +66,7 @@ print(f"URL Base :   {base}")
 print(f"Parâmetros da URL :   {parametros}")
 print(f"\nMoeda de Origem :   {moeda_origem}")
 print(f"Moeda de Destino :   {moeda_destino}")
-print(f"Quantidade :   {valor_quantidade}")
+print(f"Quantidade :   {valor_quantidade} unidades da moeda.")
 
 print("\n{:=^75} \n".format(" Conversão de Valores "))
 
