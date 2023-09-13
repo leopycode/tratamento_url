@@ -49,6 +49,13 @@ class ExtratorURL:
     def __eq__(self, other):
         return self.url == other.url
 
+#######################################################################################################################
+
+import requests
+import data_hoje
+
+cotacao = requests.get("https://economia.awesomeapi.com.br/last/USD-BRL")
+cotacao = cotacao.json()
 
 url = "bytebank.com/cambio?moedaDestino=dolar&quantidade=100&moedaOrigem=real"
 extrator_url = ExtratorURL(url)
@@ -70,14 +77,16 @@ print(f"Quantidade :   {valor_quantidade} unidades da moeda.")
 
 print("\n{:=^75} \n".format(" Conversão de Valores "))
 
-valor_dolar = float(input("Qual a cotação de hoje do dolar? R$ "))
+valor_dolar = cotacao["USDBRL"]["bid"]
+cotacao_dolar = float(valor_dolar)
+print(f"A cotação do Dolar em {data_hoje.hoje()} é R$ {cotacao_dolar:.2f}")
 quantidade = int(valor_quantidade)
 
 if moeda_origem == "real" and moeda_destino == "dolar":
-    valor_conversao = quantidade / valor_dolar
+    valor_conversao = quantidade / cotacao_dolar
     print(f"\nO valor de R$ {quantidade:.2f} é igual a US$ {valor_conversao:.2f}.")
 elif moeda_origem == "dolar" and moeda_destino == "real":
-    valor_conversao = quantidade * valor_dolar
-    print(f"\nO valor de US$ {quantidade} é igual a R$ {valor_conversao}")
+    valor_conversao = quantidade * cotacao_dolar
+    print(f"\nO valor de US$ {quantidade} é igual a R$ {valor_conversao:.2f}")
 else:
     print(f"\nCâmbio de {moeda_origem} para {moeda_destino} não está disponível.")
